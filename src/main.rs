@@ -1,10 +1,12 @@
-mod routes;
 mod controller;
+mod routes;
 
 use actix_web::web;
 use actix_web::{middleware::Logger, App, HttpResponse, HttpServer, Responder};
 use routes::tags;
-use routes::tasks::transactions_routes_handler;
+use routes::question;
+use routes::ques_group;
+use routes::articles;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -16,10 +18,12 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .wrap(Logger::default())
             .route("/", web::get().to(index))
-            .service(transactions_routes_handler())
             .service(tags::routes_handler())
+            .service(question::routes_handler())
+            .service(ques_group::routes_handler())
+            .service(articles::routes_handler())
     })
-    .bind(("127.0.0.1", 8080))?
+    .bind(("127.0.0.1", 3080))?
     .run()
     .await
 }
