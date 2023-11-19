@@ -1,7 +1,4 @@
-use diesel::sql_types::Date;
-use diesel::prelude::*;
-
-
+use actix_web::http::header::Date;
 
 // #[derive(Queryable, Selectable)]
 // #[diesel(table_name = crate::schema::posts)]

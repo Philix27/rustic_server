@@ -1,4 +1,4 @@
-use crate::controller::articles;
+use crate::repo::articles;
 use actix_web::web;
 
 pub fn routes_handler() -> actix_web::Scope {
