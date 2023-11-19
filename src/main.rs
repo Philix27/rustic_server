@@ -1,3 +1,4 @@
+mod schema;
 mod controller;
 mod routes;
 mod model;
