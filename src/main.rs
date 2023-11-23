@@ -7,6 +7,7 @@ mod schema;
 use actix_web::web;
 use actix_web::{middleware::Logger, App, HttpResponse, HttpServer, Responder};
 
+use config::app::AppState;
 use config::db;
 use routes::articles;
 use routes::ques_group;
@@ -16,12 +17,13 @@ use routes::tags;
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     let db_conn = db::setup_connection().await.unwrap();
+    // let app_state = AppState{db_conn};
 
     HttpServer::new(move || {
         App::new()
             .wrap(Logger::default())
             .route("/", web::get().to(index))
-            .service(tags::routes_handler(&db_conn))
+            .service(tags::routes_handler())
             .service(question::routes_handler())
             .service(ques_group::routes_handler())
             .service(articles::routes_handler())
