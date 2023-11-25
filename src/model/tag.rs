@@ -1,18 +1,87 @@
+use crate::config::db;
+use crate::schema::tags;
 use actix_web::http::header::Date;
+use diesel::prelude::*;
+use diesel::sql_types::{Nullable, Timestamp};
 
-// #[derive(Queryable, Selectable)]
-// #[diesel(table_name = crate::schema::posts)]
-// #[diesel(check_for_backend(diesel::pg::Pg))]
-pub struct Tag {
-    pub id: i32,
-    pub title: String,
-    pub subtitle: String,
-    pub created_at: Date,
-    pub updated_at: Date,
+trait CrudOperations<'a> {
+    fn create(title: &'a str, subtitle: &'a str);
+    fn read(title: &'a str, subtitle: &'a str);
+    fn update(title: &'a str, subtitle: &'a str);
+    fn delete(title: &'a str, subtitle: &'a str);
+}
+#[derive(Queryable, Insertable, Selectable, Debug, PartialEq)]
+#[diesel(table_name = tags)]
+pub struct Tag<'a> {
+    // pub id: i32,
+    pub title: &'a str,
+    pub subtitle: &'a str,
+    // pub created_at: Nullable<Timestamp>,
+    // pub updated_at: Nullable<Timestamp>,
+}
+pub struct NewTag<'a> {
+    pub title: &'a str,
+    pub subtitle: &'a str,
 }
 
-// ror: could not compile `diesel_cli` (bin "diesel") due to previous error
-// error: failed to compile `diesel_cli v2.1.1`, intermediate artifacts can be found at `/var/folders/69/_n1pn2hx5jz67b85h92dxzy00000gn/T/cargo-installW7IFIw`.
-// To reuse those artifacts with a future compilation, set the environment variable `CARGO_TARGET_DIR` to that path.
+impl<'a> CrudOperations<'a> for Tag<'a> {
+    fn create(d_title: &'a str, d_subtitle: &'a str) {
+        use crate::schema::tags::dsl::tags;
+        let mut conn = db::setup_connection();
 
-// export CARGO_TARGET_DIR=/var/folders/69/_n1pn2hx5jz67b85h92dxzy00000gn/T/cargo-installW7IFIw
+        let data_value = Tag {
+            title: d_title,
+            subtitle: d_subtitle,
+        };
+
+        diesel::insert_into(tags)
+            .values(&data_value)
+            .execute(&mut conn)
+            .expect("Error creating video");
+    }
+
+    fn read(d_title: &'a str, d_subtitle: &'a str) {
+        use crate::schema::tags::dsl::tags;
+        let mut conn = db::setup_connection();
+
+        let data_value = Tag {
+            title: d_title,
+            subtitle: d_subtitle,
+        };
+
+        diesel::insert_into(tags)
+            .values(&data_value)
+            .execute(&mut conn)
+            .expect("Error creating video");
+    }
+
+    fn update(d_title: &'a str, d_subtitle: &'a str) {
+        use crate::schema::tags::dsl::tags;
+        let mut conn = db::setup_connection();
+
+        let data_value = Tag {
+            title: d_title,
+            subtitle: d_subtitle,
+        };
+
+        diesel::insert_into(tags)
+            .values(&data_value)
+            .execute(&mut conn)
+            .expect("Error creating video");
+    }
+
+    fn delete(d_title: &'a str, d_subtitle: &'a str) {
+        use crate::schema::tags::dsl::tags;
+        let mut conn = db::setup_connection();
+
+        let data_value = Tag {
+            title: d_title,
+            subtitle: d_subtitle,
+        };
+
+        diesel::insert_into(tags)
+            .values(&data_value)
+            .execute(&mut conn)
+            .expect("Error creating video");
+    }
+}

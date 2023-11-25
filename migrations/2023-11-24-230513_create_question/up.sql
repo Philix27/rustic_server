@@ -11,6 +11,7 @@ CREATE TABLE questions (
     answer_index SMALLINT NOT NULL,
     answer_explain TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    question_group_id INTEGER NOT NULL REFERENCES question_group(id)
     --  FOREIGN KEY (id) REFERENCES tags(id) ON DELETE CASCADE
 );

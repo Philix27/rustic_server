@@ -16,7 +16,7 @@ use routes::tags;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    let db_conn = db::setup_connection().await.unwrap();
+    let db_conn = db::setup_connection();
     // let app_state = AppState{db_conn};
 
     HttpServer::new(move || {
